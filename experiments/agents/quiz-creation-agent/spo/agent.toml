@@ -1,0 +1,25 @@
+# The quiz creation agent of Qubit Notes, as the app runs it (backend/src/qubit_notes/domain/quizzes.py), and how its
+# prompt is optimized here by SPO.
+
+# the app's prompt the agent is given, and the version of it the experiments start from: prompts/v1.md is a copy of
+# the app's prompts/quiz/v1.md, whose SHA-256 (of its text without its last newlines) is in the app's versions.lock
+prompt = "quiz"
+start = 1
+sha256 = "0a87616271e58428ab2973e8da11085bd8942df39c622cad3645ff76b4b51063"
+
+# what the app fills in the prompt's placeholders with; a version without one of them can't be used by the app
+[placeholders]
+choices = 4
+
+[models]
+# the model the app runs the agent on (its default, claude-sonnet-5-5), and the models that optimize and judge it
+agent = "anthropic:claude-sonnet-5-5"
+optimizer = "anthropic:claude-opus-5-5"
+judge = "anthropic:claude-opus-5-5"
+
+[spo]
+rounds = 10
+samples = 3
+held_out = 10
+# how many times the judge compares each sample's two outputs, half with each first
+comparisons = 4
